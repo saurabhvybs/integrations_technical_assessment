@@ -25,11 +25,11 @@ async def authorize_hubspot(user_id, org_id):
         params = {
             "client_id": HUBSPOT_CLIENT_ID,
             "redirect_uri": HUBSPOT_REDIRECT_URI,
-            "scope": "crm.objects.contacts.read crm.objects.companies.read crm.objects.deals.read",
+            "scope": "crm.objects.contacts.read crm.objects.companies.read crm.objects.deals.read oauth",
             "response_type": "code",
             "state": f"{user_id}:{org_id}"
         }
-        return f"{HUBSPOT_AUTH_URL}?{urlencode(params)}"
+        return f"{HUBSPOT_AUTH_URL}?{urlencode(params, doseq=True)}"
     except Exception as e:
         print(f"Error generating HubSpot auth URL: {e}")
         raise HTTPException(status_code=500, detail=str(e))
